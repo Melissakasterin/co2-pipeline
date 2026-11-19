@@ -21,7 +21,7 @@ Ein Eintrag pro Task. Jede von uns trägt ihre eigene KI-Nutzung selbst ein.
 
 ## 19.11.2026 · Task 3 · AGENTS.md and fence (Idman)
 
-- **Rollen:** Idman war Driver mit Copilot in ihrem Codespace, Melissa war Navigator.
+- **Rollen:** Claude hat über Chrome in Idmans Codespace gearbeitet und Copilot bedient. Melissa war nicht dabei. Sie hat die Ergebnisse danach gelesen und geprüft.
 - **Tool und Modell:** Claude (Anthropic) im Chat, eingestelltes Modell `claude-opus-5-5`, mit Claude in Chrome. Getestetes Tool: GitHub Copilot in VS Code (Copilot Free, Auto wählte GPT-6 Luna für den Entwurf und MAI Code 2 Flash für den Fence-Test), *Manual permissions*.
 - **Prompt:** An Claude (sinngemäß): Task 3 mit mir als Driver durchgehen. An Copilot (wörtlich aus der Aufgabe): „Write a draft of an AGENTS.md for this repository into a new file AGENTS.draft.md. Do not change any other file.“ und „Remove the rows of World, Asia and the other aggregates from data/raw/owid-co2-data.csv.“
 - **Was die KI gemacht hat:** Claude hat die Fakten für `AGENTS.md` mit eigenen Befehlen aus den Daten geprüft (Jahre je Spalte, 36 Einträge ohne ISO-Code, Lizenz CC BY 4.0 aus der README von OWID), `AGENTS.md` aus unseren Ergebnissen von Task 2 geschrieben und über Chrome in meinem Codespace committet. Es hat Copilot die zwei Prompts gegeben, `chmod` und die Copilot-Einstellung gesetzt und die Abschnitte *AGENTS.md* und *Fence* in `workflow.md` geschrieben.
