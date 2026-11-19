@@ -45,7 +45,7 @@ Prompt 2 says *do not read the whole data file* because the file is too big for 
 
 ## AGENTS.md
 
-We wrote `AGENTS.md` (31 lines) from what we found in Task 2: the question, setup and commands, the data (pinned version, licence CC BY 4.0, codebook, units, which years each column covers, the 36 entries without ISO code, Kosovo) and our rules.
+The first version of `AGENTS.md` (31 lines) was written by Claude in Idman's chat (through Claude in Chrome), from what we found in Task 2: the question, setup and commands, the data (pinned version, licence CC BY 4.0, codebook, units, which years each column covers, the 36 entries without ISO code, Kosovo) and our rules.
 
 **Our file vs. the agent's draft.** In a fresh session, Copilot (Auto chose GPT-6 Luna) wrote `AGENTS.draft.md` with 43 lines. It created the file **without asking**, although the chat was set to *Manual permissions*. Before writing, it read `README.md`, our `AGENTS.md` and `workflow.md`, also without asking. So its draft was not independent: it was mostly our own file, sorted into new sections.
 
@@ -53,6 +53,8 @@ We wrote `AGENTS.md` (31 lines) from what we found in Task 2: the question, setu
 - **What it could not know:** everything that is not in the repository. It only knew about Kosovo, the non-countries, the units and the pinned version because we had written them down. It even left out the list of non-country entries and the checksum.
 
 We deleted the draft and committed the improved `AGENTS.md`.
+
+**Revised together.** Afterwards, the two of us went through the file together and added four things that were missing: the full download URLs of the pinned version, the full SHA-256 checksums, the EU country names spelled as in the OWID file (e.g. `Czechia`), and the rule *Do not commit or push. We commit ourselves after reading the diff.* Claude in Melissa's chat formulated these additions, and we read them together before Melissa committed them (`85bfe07`). The file now has 37 lines.
 
 ## Fence
 
