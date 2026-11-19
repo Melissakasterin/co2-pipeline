@@ -26,6 +26,6 @@ We answer one question: which EU country has reduced its CO₂ emissions per per
 - No new packages without asking. Only use what is in `requirements.txt`.
 - Do not change or delete tests to make them pass.
 - Print the number of rows after every filter.
-- No silent filling of missing values. Report them instead.
-- Never invent URLs or numbers. If you do not know, ask.
+- No silent filling of missing values. Report them and explain how they affect the result.
+- Never invent URLs, numbers or definitions. Check them against the data and the codebook; if that is not possible, ask.
 - Do not commit `data/raw/` or `.venv/`.
