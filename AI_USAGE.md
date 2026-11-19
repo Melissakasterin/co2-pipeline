@@ -36,3 +36,12 @@ Ein Eintrag pro Task. Jede von uns trägt ihre eigene KI-Nutzung selbst ein.
 - **Was die KI gemacht hat:** Claude hat die Fakten der ersten Fassung mit den Daten nachgerechnet und vier Verbesserungen vorgeschlagen: volle Download-Adressen, volle SHA-256-Prüfsummen, die 27 EU-Ländernamen wie im OWID-File (`Czechia`) und die Regel „Do not commit or push“. Den überarbeiteten Text hat Claude formuliert.
 - **Übernommen, geändert, verworfen:** Den Text habe ich übernommen und mit Idman zusammen gelesen. Committet habe ich ihn selbst (`85bfe07`), nachdem ich den Diff gelesen hatte.
 - **Wie geprüft:** Mit `git diff` habe ich geprüft, dass sich nur diese vier Stellen geändert haben. Die Prüfsummen haben Claude und Idman unabhängig voneinander berechnet, und die 27 Namen stimmen mit der Liste in der Aufgabe überein. Auf meinem Mac habe ich `chmod -R a-w data/raw` ausgeführt, und `ls -l data/raw` zeigt `-r--r--r--`.
+
+## 19.11.2026 · Task 4 · Pipeline in drei Schritten (Melissa)
+
+- **Rolle:** Melissa war Navigator, Idman war Driver mit Copilot.
+- **Tool und Modell:** Claude (Anthropic) im Chat, eingestelltes Modell `claude-opus-5-5`.
+- **Prompt:** sinngemäß: Claude soll uns Schritt für Schritt durch Task 4 führen, Copilots Pläne und Code mit uns prüfen und mir ab dem vierten Test den vollständigen Code geben („Gib mir bitte direkt den vollständigen fertigen Code ohne Lücken“).
+- **Was die KI gemacht hat:** Claude hat die Pläne und den Code von `download.py`, `clean_co2.py` und `analyse.py` mit uns geprüft und Planänderungen vorgeschlagen (Schreibschutz, fehlendes Datum in `SOURCES.txt`). Die Prompts für Schritt 2 und 3 und den Abschnitt *Build* in `workflow.md` hat Claude formuliert. Bei `tests/test_clean.py` hat Claude die Idee jedes Tests erklärt. Die ersten drei eigenen Tests habe ich nach Lückenvorlagen selbst ausgefüllt, den vierten (Prüfsumme) und die fertige Datei hat Claude vollständig vorgegeben.
+- **Übernommen, geändert, verworfen:** Prompts, Tests und den *Build*-Abschnitt habe ich übernommen und mit Idman gelesen. Copilots ungefragte Änderungen an `requirements.txt` und `AGENTS.md` haben wir verworfen.
+- **Wie geprüft:** `python -m pytest` lief zuerst mit `1 passed, 4 errors` und nach dem Cleaning-Skript mit `5 passed`, beides auf meinem Mac. `download.py` habe ich selbst ausgeführt (Prüfsummen korrekt). Die Ergebnisse von `analyse.py` haben Claude und Idman vorher unabhängig berechnet, und sie stimmten überein.

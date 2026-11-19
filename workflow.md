@@ -71,3 +71,86 @@ We deleted the draft and committed the improved `AGENTS.md`.
 - **Which proposal was a good idea?** Writing the cleaned data to `data/processed/` instead of changing the raw file, keeping Kosovo and printing row counts after the filter: that is exactly our plan for Task 4. Not a good idea: it wrote the tests itself (in Task 4 we write the tests before the code), and it created files without asking.
 
 Afterwards, `git status` was clean and the SHA-256 checksum of `owid-co2-data.csv` was unchanged (`7f78e2b2…`).
+
+## Build
+
+Driver: Idman with GitHub Copilot in her Codespace (new chat for each step, Agent, *Manual permissions*). In step 1, Idman's Claude (through Claude in Chrome) typed for her and she watched. Navigator: Melissa, who reviewed every plan and every diff and wrote this section. The prompts for steps 2 and 3 were formulated with Claude in Melissa's chat and checked by both of us.
+
+### Step 1 · `src/download.py`
+
+**Prompt:** the five-part prompt from the lab (Goal, Context, Constraints, Done when, First: plan only).
+
+**Changes to the plan:** The plan did not mention that `data/raw/` is read-only. We added: the script must never change permissions; if a file is missing and `data/raw/` is not writable, it stops with an error that tells the user to run `chmod -R u+w data/raw`. We also asked to append to `SOURCES.txt` only after a real download, to use only the standard library, and to test only with the existing files (no deleting or moving files in `data/raw/`).
+
+**Rejected:** Copilot also changed two files without asking: in `requirements.txt` it deleted `requests`, and in `AGENTS.md` it added two rules and put back "built in Task 4". We undid both with `git restore`.
+
+**Fixed after review:** The plan promised the date in `SOURCES.txt`, but the code did not write it. We found this by reading the code, not by running it (the test run downloaded nothing). A second, narrow prompt fixed only this line.
+
+**Checked:** `python src/download.py` downloaded nothing and printed size and SHA-256 of both files, in Idman's Codespace and on Melissa's Mac. Both checksums match `AGENTS.md`.
+
+**Commit:** `d9ddba7`
+
+### Step 2 · tests first, then `src/clean_co2.py`
+
+**Tests:** We wrote `tests/test_clean.py` before the script existed: the lecturer's test (only EU-27) plus four of our own (one row per country and year for exactly 2000–2024, 675 rows; no missing values in `population`, `co2`, `co2_per_capita`; `co2 × 1,000,000 / population` equals `co2_per_capita` within 0.1 %; raw file unchanged by SHA-256). `python -m pytest` gave `1 passed, 4 errors` (`FileNotFoundError` for `co2_eu.csv`). Commit `3de66f7`.
+
+**Prompt:**
+
+```text
+Goal:        A script src/clean_co2.py that keeps the 27 EU member states
+             from 2000 on and writes data/processed/co2_eu.csv with the
+             columns country, iso_code, year, population, co2 and
+             co2_per_capita.
+Context:     The raw data is data/raw/owid-co2-data.csv (see AGENTS.md).
+             The tests in tests/test_clean.py define what is correct.
+Constraints: Use pandas only. data/raw/ is read-only: only read from it.
+             Create data/processed/ if it does not exist. Use the EU
+             country names exactly as in AGENTS.md. Print the number of
+             rows after every filter. Do not fill missing values silently.
+             Do not change, add or delete any test. Do not change any
+             other file.
+Done when:   python -m pytest passes, and the tests are not changed.
+First:       Show me your plan and list your assumptions. Do not write
+             code yet.
+```
+
+**Changes to the plan:** The plan did not check that all 27 countries are found. A misspelled name would drop a country silently, so we added: stop with an error that names the missing countries.
+
+**Allowed / rejected:** We allowed Copilot to run the script and `pytest` once each. Copilot again created the file without asking first.
+
+**Checked:** The script printed 5,197 rows after the EU filter and 675 after the year filter. `python -m pytest` gave `5 passed` in the Codespace and on Melissa's Mac. Before committing, `git status` showed only `src/clean_co2.py` and `data/`, and `git diff --stat` was empty, so the tests were not changed.
+
+**Commit:** `74c42b5`
+
+### Step 3 · `src/analyse.py`
+
+**Prompt:**
+
+```text
+Goal:        A script src/analyse.py that answers: which EU country has
+             reduced its CO2 emissions per person the most from 2000 to
+             2024? Print the three countries with the biggest cut in
+             tonnes per person and the three with the biggest cut in
+             percent, with their numbers, and save one chart in figures/.
+Context:     The input is data/processed/co2_eu.csv (27 EU countries,
+             2000 to 2024, column co2_per_capita in tonnes per person).
+             See AGENTS.md.
+Constraints: Use pandas and matplotlib only. Read only
+             data/processed/co2_eu.csv. Create figures/ if it does not
+             exist. Label the chart axes with units, and let the y-axis
+             start at 0. Do not change any other file and no test.
+Done when:   python src/analyse.py runs without errors, prints both
+             top-three lists with numbers, and saves one PNG in figures/.
+First:       Show me your plan and list your assumptions. Do not write
+             code yet.
+```
+
+**Changes to the plan:** Copilot planned to exclude countries with a missing value from the ranking. That would be silent, so we asked it to stop with an error instead. It also planned a chart of only the top three; we asked for all 27 countries, so that the three countries whose emissions rose (Croatia, Latvia, Lithuania) are visible.
+
+**Deviation from the prompt:** The bars are horizontal, so the value axis is the x-axis, and it goes below 0 because of the three increases. All bars start at a marked 0 line, so their lengths are comparable. This keeps the reason for our "start at 0" rule (no truncated axis), so we accepted it.
+
+**Allowed:** three read-only commands and one run of the script. The first attempt failed with a 503 error (model overloaded); the second worked. Copilot wrote the file without asking.
+
+**Checked:** We computed the expected numbers ourselves before the run. The script printed exactly these: in tonnes per person Luxembourg 9.49, Finland 5.71, Ireland 5.56; in percent Denmark 53.33 %, Finland 51.87 %, Malta 48.09 %. `pytest` still passed, and `git diff --stat` was empty.
+
+**Commit:** `af8ac54`
