@@ -27,3 +27,12 @@ Ein Eintrag pro Task. Jede von uns trägt ihre eigene KI-Nutzung selbst ein.
 - **Was die KI gemacht hat:** Claude hat die Fakten für `AGENTS.md` mit eigenen Befehlen aus den Daten geprüft (Jahre je Spalte, 36 Einträge ohne ISO-Code, Lizenz CC BY 4.0 aus der README von OWID), `AGENTS.md` aus unseren Ergebnissen von Task 2 geschrieben und über Chrome in meinem Codespace committet. Es hat Copilot die zwei Prompts gegeben, `chmod` und die Copilot-Einstellung gesetzt und die Abschnitte *AGENTS.md* und *Fence* in `workflow.md` geschrieben.
 - **Übernommen, geändert, verworfen:** Aus Copilots Entwurf zwei Formulierungen übernommen, den Entwurf gelöscht. Beim Fence-Test einen lesenden Python-Befehl einmal erlaubt, das Ausführen von Test und Skript abgelehnt und Copilots zwei neue Dateien (`src/clean_co2.py`, `tests/test_clean_co2.py`) mit *Undo All Edits* verworfen.
 - **Wie geprüft:** `ls -l data/raw` zeigt `-r--r--r--`, ein eigener Schreibversuch scheiterte mit *Permission denied*, `git status` war danach sauber, und die Prüfsumme der Datendatei blieb `7f78e2b2…`. Alle Commits auf GitHub mit dem Entwurf verglichen.
+
+## 19.11.2026 · Task 3 · Überarbeitung der AGENTS.md und Fence auf meinem Mac (Melissa)
+
+- **Rolle:** Bei der ersten Fassung von `AGENTS.md` und beim Fence-Test war ich nicht dabei. Danach habe ich die Ergebnisse gelesen und mit Idman per Anruf die Überarbeitung gemacht. Dabei habe ich getippt, Idman hat mitgelesen.
+- **Tool und Modell:** Claude (Anthropic) im Chat, eingestelltes Modell `claude-opus-5-5`.
+- **Prompt:** sinngemäß: Claude soll die erste Fassung von `AGENTS.md` prüfen. Danach: „schick einfach den kompletten Text und ich füge ihn dort hinzu“.
+- **Was die KI gemacht hat:** Claude hat die Fakten der ersten Fassung mit den Daten nachgerechnet und vier Verbesserungen vorgeschlagen: volle Download-Adressen, volle SHA-256-Prüfsummen, die 27 EU-Ländernamen wie im OWID-File (`Czechia`) und die Regel „Do not commit or push“. Den überarbeiteten Text hat Claude formuliert.
+- **Übernommen, geändert, verworfen:** Den Text habe ich übernommen und mit Idman zusammen gelesen. Committet habe ich ihn selbst (`85bfe07`), nachdem ich den Diff gelesen hatte.
+- **Wie geprüft:** Mit `git diff` habe ich geprüft, dass sich nur diese vier Stellen geändert haben. Die Prüfsummen haben Claude und Idman unabhängig voneinander berechnet, und die 27 Namen stimmen mit der Liste in der Aufgabe überein. Auf meinem Mac habe ich `chmod -R a-w data/raw` ausgeführt, und `ls -l data/raw` zeigt `-r--r--r--`.
