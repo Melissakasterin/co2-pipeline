@@ -82,3 +82,21 @@ Ein Eintrag pro Task. Jede von uns trägt ihre eigene KI-Nutzung selbst ein.
 - **Was die KI gemacht hat:** Die Tests für alle sechs Fehler hat Claude im Chat vorgeschlagen und formuliert, auch die Mini-Tabellen für `per_person` und `biggest_cuts`. Ich habe sie an Idman weitergegeben, die Tests sind also nicht von uns selbst ausgedacht. Claude hat außerdem empfohlen, den 27-Länder-Test erst ab `BASE_YEAR` zu prüfen und bei den Importen das letzte Jahr mit Konsumdaten (2023) zu zeigen statt „nan“. Das Fazit in `bug-hunt.md` hat Claude formuliert. Die Fixes hat Idmans Claude geschrieben.
 - **Übernommen, geändert, verworfen:** Die Testideen, beide Empfehlungen und das Fazit habe ich übernommen.
 - **Wie geprüft:** Bei jedem Fehler war der Test erst rot und nach dem Fix grün (am Ende 16 passed). Die Zahlen in `report_after.txt` habe ich mit unabhängigen Werten verglichen: 3.870 Mt wie die Zeile `European Union (27)`, 9,2 t pro Person wie deren `co2_per_capita`, 17,0 % wie `share_global_co2`, 817 Mt wie `trade_co2`. Das Diagramm habe ich angeschaut: Die Achse beginnt bei 0 und ist in Mt beschriftet.
+
+  ## 20.11.2026 · Task 6 · Bug hunt (Idman)
+
+- **Rolle:** Melissa und ich haben das Skript zusammen geprüft. Ich war Driver in meinem Codespace.
+- **Tool und Modell:** ChatGPT (Modell: …) zum Umformulieren. Claude (Anthropic), eingestelltes Modell `claude-opus-5-5`. Die Schritte habe ich eins zu eins in meinem Codespace nachgemacht.
+- **Prompt:** An ChatGPT: unsere gesammelten Verdachtspunkte mit der Bitte, sie besser zu formulieren. An Claude: „mach es“ und danach unsere Prüfbefehle.
+- **Was die KI gemacht hat:** ChatGPT hat unsere Punkte umformuliert. Claude hat die Schritte vorgegeben, ich habe sie eins zu eins ausgeführt: `eu_report.py` 1:1 aus dem Kurs-Repo übernommen (SHA-256 `230ba4d7…`), den Bericht ausgeführt, nach Melissas Okay committet (`377efcd`, `af3d103`) und unsere Prüfbefehle ausgeführt. Aus unseren Notizen und den Ausgaben hat Claude die Tabelle für `bug-hunt.md` formuliert, die ich eingefügt habe (Branch `bug-hunt-draft`, `dfef863`). Claude hat nicht bewertet, ob ein Punkt ein Fehler ist.
+- **Übernommen, geändert, verworfen:** Die Tabelle übernommen. Melissa hat einen Beleg für Punkt 5 ergänzt und Punkt 6 gestrichen („checked, not an error“), weil unser Befehl 0 ergab.
+- **Wie geprüft:** Prüfsumme mit dem Original verglichen. Jede Zahl in der Tabelle kommt aus einem Befehl, den wir ausgeführt haben. Melissa hat `bug-hunt.md` vor dem Merge gelesen.
+
+## 20.11.2026 · Task 7 · Tests und Fixes (Idman)
+
+- **Rolle:** Ich war Driver, Melissa Navigator. Ich habe die Schritte eins zu eins in meinem Codespace nachgemacht.
+- **Tool und Modell:** Claude (Anthropic), eingestelltes Modell `claude-opus-5-5`. Die Schritte habe ich eins zu eins nachgemacht. Die Testideen kamen von Claude in Melissas Chat.
+- **Prompt:** Melissas Vorgaben pro Fehler (Test, Fix, Commit-Nachricht), jeweils wörtlich weitergegeben.
+- **Was die KI gemacht hat:** Die Testideen kamen von Claude in Melissas Chat, nicht von uns selbst. Mein Claude hat die Tests und Fixes geschrieben und die Schritte vorgegeben. Ich habe sie eins zu eins ausgeführt: Tests eingegeben, gezeigt, dass sie fehlschlagen, Fixes eingefügt, den Bericht nach jedem Fix mit dem vorherigen verglichen und nach Melissas Okay committet (`b929f9b`, `8c70c00`, `d73df11` bis `504b172`, `3d61c0e`).
+- **Übernommen, geändert, verworfen:** Fixes übernommen. Geändert: Melissas Test für 27 Länder prüft jetzt nur Jahre ab `BASE_YEAR`, weil es vor 1850 keine 27 Länder in der Datei gibt. Die Importzeile nimmt das letzte Jahr mit Konsumdaten (2023) statt „nan“.
+- **Wie geprüft:** Jeder Test erst rot, dann grün, am Ende 16 passed. Der Bericht nach jedem Fix mit dem vorherigen verglichen (dabei die Falle gefunden: ohne `min_count=1` wurden die Importe 2024 negativ, −2.426 Mt). Melissa hat alle Commits vor dem Push geprüft.
