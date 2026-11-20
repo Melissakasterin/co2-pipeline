@@ -43,6 +43,7 @@ def append_source_log(path: Path, filename: str, url: str, checksum: str) -> Non
 
 
 def main() -> None:
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
     missing_files = [filename for filename, _, _ in FILES if not (RAW_DIR / filename).exists()]
     raw_dir_is_writable = (
         RAW_DIR.is_dir()
