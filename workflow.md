@@ -154,3 +154,53 @@ First:       Show me your plan and list your assumptions. Do not write
 **Checked:** We computed the expected numbers ourselves before the run. The script printed exactly these: in tonnes per person Luxembourg 9.49, Finland 5.71, Ireland 5.56; in percent Denmark 53.33 %, Finland 51.87 %, Malta 48.09 %. `pytest` still passed, and `git diff --stat` was empty.
 
 **Commit:** `af8ac54`
+## Verify
+
+Melissa was driver, Idman was navigator and wrote this section.
+
+### 1. Did an agent change the tests?
+
+`git log --oneline -- tests/` shows only one commit, `3de66f7`: our own commit with the five tests. No agent changed or deleted a test.
+
+### 2. Fresh clone
+
+Melissa cloned the repository into a new folder (`~/co2-check`), created and activated `.venv` and ran the whole pipeline from the start.
+
+**First try:** `python src/download.py` stopped with *"data/raw/ is not writable. Run chmod -R u+w data/raw first."* The reason: `data/raw/` is not committed, so in a fresh clone the folder does not exist. The check `os.access(RAW_DIR, os.W_OK)` failed, and its message pointed in the wrong direction. On our own computers the folder already existed, so we never saw this before.
+
+**Fix** (`2612cbe`): one line at the start of `main()`, `RAW_DIR.mkdir(parents=True, exist_ok=True)`, creates the folder if it is missing. Claude suggested this line in Melissa's chat.
+
+**Second try**, in a new clone:
+
+| Step | Result |
+|---|---|
+| `python src/download.py` | both files downloaded, checksums match (`7f78e2b2…`, `33b4f5e0…`) |
+| `data/raw/SOURCES.txt` | 2 lines, each with date (2026-11-20), file name, URL and checksum |
+| `python src/clean_co2.py` | 5,197 → 675 rows |
+| `python -m pytest` | 5 passed |
+| `python src/analyse.py` | same numbers as before: Luxembourg 9.49, Finland 5.71, Ireland 5.56 t/person; Denmark 53.33 %, Finland 51.87 %, Malta 48.09 % |
+
+Then we deleted the clone. Without a fresh clone we would not have found the missing folder.
+
+### 3. Luxembourg by hand
+
+On the raw file, without our scripts:
+
+```
+grep -E "^Luxembourg,(2000|2024)," data/raw/owid-co2-data.csv | cut -d, -f1,2,4,8,17
+Luxembourg,2000,436142,8.702,19.953
+Luxembourg,2024,673042,7.040,10.460
+```
+
+(columns: country, year, population, `co2` in Mt, `co2_per_capita` in t/person)
+
+| | 2000 | 2024 | Change |
+|---|---|---|---|
+| Population | 436,142 | 673,042 | +54.3 % |
+| CO₂ total (Mt) | 8.702 | 7.040 | −19.1 % |
+| CO₂ per person, our calculation (`co2` × 1,000,000 ÷ `population`) | 19.952 t | 10.460 t | |
+| CO₂ per person, in the file | 19.953 t | 10.460 t | −9.49 t |
+
+Our calculation matches the column `co2_per_capita` (the difference in 2000 is only rounding), and −9.49 t is the same number as in our pipeline. Melissa calculated it with a calculator, and Idman's Claude calculated it separately with its own copy of the data. Both got the same result.
+
+**What it means:** total CO₂ fell by only about a fifth, but the population grew by more than half. A large part of Luxembourg's "record" per person comes from population growth, not only from lower emissions.
