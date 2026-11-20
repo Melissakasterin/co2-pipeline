@@ -164,7 +164,7 @@ Melissa was driver, Idman was navigator and wrote this section.
 
 ### 2. Fresh clone
 
-Melissa cloned the repository into a new folder (`~/co2-check`), created and activated `.venv` and ran the whole pipeline from the start.
+Melissa cloned the repository into a new folder (`~/co2-check`), kept her existing `.venv` active (she did not create a new one) and ran the whole pipeline from the start.
 
 **First try:** `python src/download.py` stopped with *"data/raw/ is not writable. Run chmod -R u+w data/raw first."* The reason: `data/raw/` is not committed, so in a fresh clone the folder does not exist. The check `os.access(RAW_DIR, os.W_OK)` failed, and its message pointed in the wrong direction. On our own computers the folder already existed, so we never saw this before.
 
@@ -211,7 +211,7 @@ Melissa asked Claude Code in a new session (manual mode): *"Why are the CO2 emis
 
 **Answer of the agent:** mainly fuel tourism (fuel is cheaper in Luxembourg, so people from Belgium, France and Germany and lorries in transit fill up there, and the CO₂ counts for Luxembourg). It also named cross-border commuters, the small population, an economy that depends on cars and, in the past, the steel industry. It gave **no numbers**. It said that it had not checked numbers with the data and that our `AGENTS.md` asks it not to invent numbers. So our rule worked.
 
-**Our source:** OECD (2025), *Environment at a Glance Indicators*, country page "Luxembourg", OECD Publishing, Paris, https://www.oecd.org/en/publications/environment-at-a-glance-indicators_ac4b8b89-en/full-report/component-32.html (accessed 20.11.2026). It says: *"CO2 emissions from fuel combustion per person are high due to the historically low taxation of road fuels, which has encouraged cross-border workers and drivers of vehicles in transit to fill in Luxembourg."*
+**Our source:** OECD (2025), *Environment at a Glance Indicators*, country page "Luxembourg", OECD Publishing, Paris, https://www.oecd.org/en/publications/environment-at-a-glance-indicators_ac4b8b89-en/full-report/component-32.html (accessed 20.11.2026), DOI https://doi.org/10.1787/ac4b8b89-en. "OECD (2025)" is the citation that the OECD suggests on the page; the page itself shows the date 26 October 2026. It says: *"CO2 emissions from fuel combustion per person are high due to the historically low taxation of road fuels, which has encouraged cross-border workers and drivers of vehicles in transit to fill in Luxembourg."*
 
 | Claim of the agent | Checked with the OECD source? |
 |---|---|
