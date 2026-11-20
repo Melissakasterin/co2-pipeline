@@ -83,10 +83,10 @@ Ein Eintrag pro Task. Jede von uns trägt ihre eigene KI-Nutzung selbst ein.
 - **Übernommen, geändert, verworfen:** Die Testideen, beide Empfehlungen und das Fazit habe ich übernommen.
 - **Wie geprüft:** Bei jedem Fehler war der Test erst rot und nach dem Fix grün (am Ende 16 passed). Die Zahlen in `report_after.txt` habe ich mit unabhängigen Werten verglichen: 3.870 Mt wie die Zeile `European Union (27)`, 9,2 t pro Person wie deren `co2_per_capita`, 17,0 % wie `share_global_co2`, 817 Mt wie `trade_co2`. Das Diagramm habe ich angeschaut: Die Achse beginnt bei 0 und ist in Mt beschriftet.
 
-  ## 20.11.2026 · Task 6 · Bug hunt (Idman)
+## 20.11.2026 · Task 6 · Bug hunt (Idman)
 
 - **Rolle:** Melissa und ich haben das Skript zusammen geprüft. Ich war Driver in meinem Codespace.
-- **Tool und Modell:** ChatGPT (Modell: …) zum Umformulieren. Claude (Anthropic), eingestelltes Modell `claude-opus-5-5`. Die Schritte habe ich eins zu eins in meinem Codespace nachgemacht.
+- **Tool und Modell:** ChatGPT (Modell unbekannt) zum Umformulieren. Claude (Anthropic), eingestelltes Modell `claude-opus-5-5`. Die Schritte habe ich eins zu eins in meinem Codespace nachgemacht.
 - **Prompt:** An ChatGPT: unsere gesammelten Verdachtspunkte mit der Bitte, sie besser zu formulieren. An Claude: „mach es“ und danach unsere Prüfbefehle.
 - **Was die KI gemacht hat:** ChatGPT hat unsere Punkte umformuliert. Claude hat die Schritte vorgegeben, ich habe sie eins zu eins ausgeführt: `eu_report.py` 1:1 aus dem Kurs-Repo übernommen (SHA-256 `230ba4d7…`), den Bericht ausgeführt, nach Melissas Okay committet (`377efcd`, `af3d103`) und unsere Prüfbefehle ausgeführt. Aus unseren Notizen und den Ausgaben hat Claude die Tabelle für `bug-hunt.md` formuliert, die ich eingefügt habe (Branch `bug-hunt-draft`, `dfef863`). Claude hat nicht bewertet, ob ein Punkt ein Fehler ist.
 - **Übernommen, geändert, verworfen:** Die Tabelle übernommen. Melissa hat einen Beleg für Punkt 5 ergänzt und Punkt 6 gestrichen („checked, not an error“), weil unser Befehl 0 ergab.
