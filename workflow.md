@@ -74,7 +74,7 @@ Afterwards, `git status` was clean and the SHA-256 checksum of `owid-co2-data.cs
 
 ## Build
 
-Driver: Idman with GitHub Copilot in her Codespace (new chat for each step, Agent, *Manual permissions*). In step 1, Idman's Claude (through Claude in Chrome) typed for her and she watched. Navigator: Melissa, who reviewed every plan and every diff and wrote this section. The prompts for steps 2 and 3 were formulated with Claude in Melissa's chat and checked by both of us.
+Driver: Idman with GitHub Copilot in her Codespace (new chat for each step, Agent, *Manual permissions*). In all three steps, Idman's Claude (through Claude in Chrome) typed for her and she watched. Navigator: Melissa, who reviewed every plan and every diff and wrote this section. The prompts for steps 2 and 3 were formulated with Claude in Melissa's chat and checked by both of us.
 
 ### Step 1 · `src/download.py`
 
