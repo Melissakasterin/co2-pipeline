@@ -80,3 +80,14 @@ def test_biggest_cuts_starts_in_base_year():
         "co2_per_capita": [10.0, 12.0, 5.0],
     })
     assert r.biggest_cuts(toy).loc["A", "tonnes"] == -5.0
+
+
+
+def test_chart_axis(df, tmp_path):
+    import matplotlib.pyplot as plt
+
+    totals = r.eu_totals(r.eu_members(df))
+    r.chart(totals, r.BASE_YEAR, 2023, path=tmp_path / "x.png")
+    ax = plt.gca()
+    assert "Mt" in ax.get_ylabel()
+    assert ax.get_ylim()[0] == 0

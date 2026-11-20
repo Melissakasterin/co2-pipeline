@@ -75,9 +75,8 @@ def chart(totals, first, latest, path="eu_report.png"):
         columns={"co2": "Territorial", "consumption_co2": "Consumption-based"}
     )
     ax = data.plot.bar(rot=0, color=["#3D6BA8", "#C25A43"])
-    ax.set_ylim(2000, None)  # zoom in, so the change is easy to see
     ax.set_xlabel("")
-    ax.set_ylabel("CO2 emissions (t)")
+    ax.set_ylabel("CO2 emissions (Mt)")
     ax.set_title(f"EU-27: CO2 emissions, {first} vs. {latest}")
     plt.tight_layout()
     plt.savefig(path, dpi=150)
@@ -119,7 +118,7 @@ def main():
     print(f"\nBiggest cuts in CO2 per person since {first}, in percent")
     print(cuts.nsmallest(3, "percent").to_string())
 
-    chart(totals, first, latest)
+    chart(totals, first, cons_latest)  # both bars need consumption-based data
 
 
 if __name__ == "__main__":
