@@ -70,3 +70,13 @@ def test_world_share_matches_owid(df, owid_eu):
     share = r.world_share(df, r.eu_members(df))
     assert share.loc[1990] == pytest.approx(owid_eu.loc[1990, "share_global_co2"], abs=0.1)
     assert share.loc[2024] == pytest.approx(owid_eu.loc[2024, "share_global_co2"], abs=0.1)
+
+
+
+def test_biggest_cuts_starts_in_base_year():
+    toy = pd.DataFrame({
+        "country": ["A", "A", "A"],
+        "year": [1990, 1991, 2024],
+        "co2_per_capita": [10.0, 12.0, 5.0],
+    })
+    assert r.biggest_cuts(toy).loc["A", "tonnes"] == -5.0
