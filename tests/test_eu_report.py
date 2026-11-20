@@ -63,3 +63,10 @@ def test_per_person_is_weighted():
         "co2_per_capita": [10.0, 1.0],
     })
     assert r.per_person(toy).loc[1990] == pytest.approx(1.9)
+
+
+
+def test_world_share_matches_owid(df, owid_eu):
+    share = r.world_share(df, r.eu_members(df))
+    assert share.loc[1990] == pytest.approx(owid_eu.loc[1990, "share_global_co2"], abs=0.1)
+    assert share.loc[2024] == pytest.approx(owid_eu.loc[2024, "share_global_co2"], abs=0.1)
