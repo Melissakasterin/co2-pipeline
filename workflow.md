@@ -204,3 +204,21 @@ Luxembourg,2024,673042,7.040,10.460
 Our calculation matches the column `co2_per_capita` (the difference in 2000 is only rounding), and −9.49 t is the same number as in our pipeline. Melissa calculated it with a calculator, and Idman's Claude calculated it separately with its own copy of the data. Both got the same result.
 
 **What it means:** total CO₂ fell by only about a fifth, but the population grew by more than half. A large part of Luxembourg's "record" per person comes from population growth, not only from lower emissions.
+
+### 4. A sceptical question
+
+Melissa asked Claude Code in a new session (manual mode): *"Why are the CO2 emissions per person of Luxembourg so high?"*
+
+**Answer of the agent:** mainly fuel tourism (fuel is cheaper in Luxembourg, so people from Belgium, France and Germany and lorries in transit fill up there, and the CO₂ counts for Luxembourg). It also named cross-border commuters, the small population, an economy that depends on cars and, in the past, the steel industry. It gave **no numbers**. It said that it had not checked numbers with the data and that our `AGENTS.md` asks it not to invent numbers. So our rule worked.
+
+**Our source:** OECD (2025), *Environment at a Glance Indicators*, country page "Luxembourg", OECD Publishing, Paris, https://www.oecd.org/en/publications/environment-at-a-glance-indicators_ac4b8b89-en/full-report/component-32.html (accessed 20.11.2026). It says: *"CO2 emissions from fuel combustion per person are high due to the historically low taxation of road fuels, which has encouraged cross-border workers and drivers of vehicles in transit to fill in Luxembourg."*
+
+| Claim of the agent | Checked with the OECD source? |
+|---|---|
+| Fuel tourism and lorries in transit | yes ✅ |
+| Cross-border commuters | yes ✅ |
+| Small population, car-heavy economy, steel industry | not in this sentence, so not checked |
+
+Claude found the source in Melissa's chat. Melissa opened the page herself and checked the sentence, and Idman's Claude checked it on the page again.
+
+**What it means for our answer:** the source explains why Luxembourg started so high (19.95 t per person in 2000). It does not say why the value fell. Together with point 3 (population +54.3 %, total CO₂ only −19.1 %), this is why we do not simply call Luxembourg the "winner" in tonnes.
