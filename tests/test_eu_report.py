@@ -46,3 +46,20 @@ def test_missing_consumption_stays_missing(df):
 def test_report_has_no_nan(capsys):
     r.main()
     assert "nan" not in capsys.readouterr().out
+
+
+
+def test_per_person_matches_owid(df, owid_eu):
+    pp = r.per_person(r.eu_members(df))
+    assert pp.loc[1990] == pytest.approx(owid_eu.loc[1990, "co2_per_capita"], abs=0.01)
+
+
+def test_per_person_is_weighted():
+    toy = pd.DataFrame({
+        "country": ["A", "B"],
+        "year": [1990, 1990],
+        "co2": [10.0, 9.0],
+        "population": [1_000_000, 9_000_000],
+        "co2_per_capita": [10.0, 1.0],
+    })
+    assert r.per_person(toy).loc[1990] == pytest.approx(1.9)
