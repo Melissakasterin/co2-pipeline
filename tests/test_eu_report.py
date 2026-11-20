@@ -21,3 +21,13 @@ def owid_eu(df):
 
 def test_report_runs():
     r.main()
+
+
+def test_eu_has_27_members(df):
+    counts = r.eu_members(df).groupby("year")["country"].nunique()
+    assert (counts == 27).all()
+
+
+def test_eu_total_matches_owid(df, owid_eu):
+    totals = r.eu_totals(r.eu_members(df))
+    assert totals.loc[1990, "co2"] == pytest.approx(owid_eu.loc[1990, "co2"], abs=0.1)
