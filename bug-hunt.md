@@ -27,4 +27,17 @@ Checked, not an error: the latest year (2023) is complete for `consumption_co2`.
 
 ## Task 6 · The agent's review
 
-*Follows after this file is committed (step 4).*
+Fresh Claude Code session in Melissa's terminal (20.11.2026, 15:46), with the prompt from the lab. It ran its own checks and changed no file (`git status`: working tree clean). It also read our committed `bug-hunt.md`, so its review was not fully independent of our list.
+
+| Error | We found it | Agent found it | Agent's evidence |
+|---|---|---|---|
+| `Czech Republic` vs. `Czechia` in `MEMBERS` (`eu_members`) | yes (row 1) | yes (#1) | Totals with Czechia: 3,870.3 / 2,485.0 Mt, the same as the `European Union (27)` row |
+| `dropna(subset=["consumption_co2"])` removes 2024, so the report ends in 2023 (`eu_members`) | partly (row 1, no number) | yes, but listed it as a "smaller point", not as an error in the numbers | It removes exactly 27 rows from 1990 onwards, all in 2024; only `consumption_co2` is missing in 2024 |
+| Unweighted mean of per-person values (`per_person`) | yes (row 3) | yes (#2) | Total CO₂ / total population: 9.21 / 5.51 t, −40.2 %, the same as the EU-27 row |
+| World total sums all rows, including aggregates (`world_share`) | yes (row 4) | yes (#3) | In 1990 the sum is 6.8 times the `World` row; correct share 17.0 / 6.5 %, the same as `share_global_co2` |
+| `year > since` makes 1991 the base year (`biggest_cuts`) | yes (row 5) | yes (#4) | Denmark 12.44 t in 1991 vs. 10.40 t in 1990; top 3 with both fixes: Luxembourg −20.7, Estonia −17.1, Czechia −8.2 t |
+| Y-axis label "(t)" instead of Mt, axis starts at 2,000 (`chart`) | yes (row 6) | yes (#6) | A 35 % fall looks like a fall of about 75 % |
+
+**Not an error in the numbers:** The agent's #5 says "emissions embedded in imports" should be called net trade (OWID's `trade_co2`). The numbers are consumption-based minus territorial, as the report says, and apart from the missing Czechia they equal `trade_co2` (490 / 817 Mt). We count this as an imprecise label, not as one of the errors.
+
+**One number checked:** We checked the agent's Czechia −8.2 t and Denmark's 10.40 / 12.44 t directly in `data/raw/owid-co2-data.csv`, without `eu_report.py` → 15.94 t (1990), 7.70 t (2023), difference −8.2 t; Denmark 10.40 / 12.44 t. The agent's numbers are right and inherit no error. Our own evidence in row 5 does inherit one: Germany is third there only because Czechia was missing (error 1).
